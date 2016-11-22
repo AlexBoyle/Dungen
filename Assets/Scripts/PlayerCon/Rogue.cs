@@ -9,18 +9,26 @@ public class Rogue : Ability {
 	private int XcoolDown = 0;
 	private int BcoolDown = 0;
 	private int YcoolDown = 0;
+	private GameObject obj;
+	private PlayerController con;
+	public Rogue(GameObject obje){
+		obj = obje;
+		con = obj.GetComponent<PlayerController> ();
+	}
 
-	public override void abilityUpdate(GamePadState state,GamePadState prestate, GameObject obj){
+	public override void abilityUpdate(GamePadState state,GamePadState prestate){
 		//ability defs here
 
 		//basic attack/crits in stealth
 		if (state.Buttons.A == ButtonState.Pressed && prestate.Buttons.A == ButtonState.Released && AcoolDown < 0) {
 			if (playerState == status.Normal) {
-				//do dmg
+				damage = 10;
 			} 
 			else if (playerState == status.Stealth) {
-				//do 110% dmg
+				damage = 15;
 			}
+			con.basicAttack.SetActive (true);
+			AcoolDown = 40;
 		}
 
 		//

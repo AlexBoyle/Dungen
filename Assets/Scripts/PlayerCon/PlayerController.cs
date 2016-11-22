@@ -4,7 +4,9 @@ using XInputDotNetPure;
 public class PlayerController : MonoBehaviour {
 	public PlayerIndex controllerNum;
 	public playerClass Class;
-	private Ability script;
+	public GameObject attackDir;
+	public GameObject basicAttack;
+	public Ability script;
 	public float playerSpeed = 1;
 	private GamePadState state;
 	private GamePadState prestate;
@@ -21,7 +23,7 @@ public class PlayerController : MonoBehaviour {
 		{
 		case playerClass.Rogue:
 			index = 0;
-			script = new Rogue ();
+			script = new Rogue (gameObject);
 			break;
 		case playerClass.Mage:
 			index = 1;
@@ -46,7 +48,7 @@ public class PlayerController : MonoBehaviour {
 		{
 		case playerClass.Rogue:
 			index = 0;
-			script = new Rogue ();
+			script = new Rogue (gameObject);
 			break;
 		case playerClass.Mage:
 			index = 1;
@@ -74,14 +76,17 @@ public class PlayerController : MonoBehaviour {
 			transform.rotation = Quaternion.Euler (0, 0, 0);
 		else
 			gameObject.GetComponent<IndAnim> ().current = immortal.animations[index].getIdle();
-		script.abilityUpdate (state,prestate, gameObject);
+		script.abilityUpdate (state,prestate);
 		prestate = state;
+		attackDir.transform.rotation =  PointerRotation (state.ThumbSticks.Left);
 	}
 
 	Quaternion PointerRotation(GamePadThumbSticks.StickValue a){
 
 		if ((Mathf.Abs (a.X) > .2f) || (Mathf.Abs (a.Y) > .2f)) {
-			currentRot = Quaternion.Euler (0, 0, (Mathf.Atan2 (a.X, -a.Y) * Mathf.Rad2Deg) - 180);
+			float temp = (Mathf.Atan2 (a.X, -a.Y) * Mathf.Rad2Deg) - 90;
+			//Debug.Log (temp);
+			currentRot = Quaternion.Euler (0, 0, temp);
 			return currentRot;
 		} else {
 			return currentRot;

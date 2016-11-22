@@ -6,7 +6,7 @@ public class Tank : Ability {
 
 
 
-	public override void abilityUpdate(GamePadState state,GamePadState prestate, GameObject obj){
+	public override void abilityUpdate(GamePadState state,GamePadState prestate){
 		//ability defs here
 		if (state.Buttons.A == ButtonState.Pressed && state.Buttons.A == ButtonState.Released) {
 

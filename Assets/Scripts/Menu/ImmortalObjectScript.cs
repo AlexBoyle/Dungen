@@ -45,6 +45,11 @@ public class ImmortalObjectScript : MonoBehaviour {
 	}
 }
 
+[System.Serializable]
+public class Effect{
+	public effect  effect;
+	public int time;
+}
 
 [System.Serializable]
 public class arr{
