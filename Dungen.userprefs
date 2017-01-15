@@ -1,0 +1,17 @@
+﻿<Properties StartupItem="Assembly-CSharp.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\IndAnim.cs">
+    <Files>
+      <File FileName="Assets\Scripts\PlayerCon\Rogue.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Menu\PressAScript.cs" Line="52" Column="17" />
+      <File FileName="Assets\Scripts\Menu\ImmortalObjectScript.cs" Line="7" Column="45" />
+      <File FileName="Assets\Scripts\JoinGameCam.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\IndAnim.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\enemy\Monst.cs" Line="27" Column="26" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

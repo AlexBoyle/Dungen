@@ -13,9 +13,11 @@ public class PlayerController : MonoBehaviour {
 	private ImmortalObjectScript immortal;
 	private int index;
 	Quaternion currentRot;
+	Rigidbody2D RB;
 	// Use this for initialization
 	void Start () {
 		immortal = GameObject.Find ("Immortal").GetComponent<ImmortalObjectScript> ();
+		RB = GetComponent<Rigidbody2D> ();
 		currentRot = Quaternion.identity;
 		state = GamePad.GetState (controllerNum);
 		prestate = state;
@@ -69,7 +71,11 @@ public class PlayerController : MonoBehaviour {
 	void FixedUpdate () {
 		state = GamePad.GetState (controllerNum);
 		gameObject.GetComponent<IndAnim> ().current = immortal.animations[index].getWalk();
-		transform.position += new Vector3 (playerSpeed * state.ThumbSticks.Left.X, playerSpeed * state.ThumbSticks.Left.Y, 0);
+		RaycastHit2D groundCheck = Physics2D.Raycast (transform.position, Vector2.down, .35f);
+		RB.velocity = new Vector2 (playerSpeed * state.ThumbSticks.Left.X, 0);
+		if (state.Buttons.A == ButtonState.Pressed && prestate.Buttons.A == ButtonState.Released) {
+			RB.velocity = new Vector2 (0, 100);
+		}
 		if (state.ThumbSticks.Left.X < 0)
 			transform.rotation = Quaternion.Euler (180, 0, 180);
 		else if (state.ThumbSticks.Left.X > 0)

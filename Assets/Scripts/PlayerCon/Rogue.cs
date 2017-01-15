@@ -28,7 +28,7 @@ public class Rogue : Ability {
 				damage = 15;
 			}
 			con.basicAttack.SetActive (true);
-			AcoolDown = 40;
+			AcoolDown = 20;
 		}
 
 		//

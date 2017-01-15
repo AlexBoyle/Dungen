@@ -5,15 +5,18 @@ public class IndAnim : MonoBehaviour {
 	public bool loop = true;
 	public int aniSpeed = 2;
 	private int anicount = 0;
-	private int aniStep = 0;
+	public int frame = 0;
+	public bool resetOnEnable = true;
 	void Start(){
 		
 	}
 	void OnEnable() {
-		aniStep = 0;
-		anicount = 0;
-		if(current.Length > 0)
-			gameObject.GetComponent<SpriteRenderer> ().sprite = current [0];
+		if (resetOnEnable) {
+			frame = 0;
+			anicount = 0;
+			if (current.Length > 0)
+				gameObject.GetComponent<SpriteRenderer> ().sprite = current [0];
+		}
 	}
 	public void clear(){
 		
@@ -24,15 +27,15 @@ public class IndAnim : MonoBehaviour {
 
 		if ((anicount++) >= aniSpeed) {
 			anicount = 0;
-			aniStep++;
-			if (!loop && aniStep == current.Length)
+			frame++;
+			if (!loop && frame == current.Length)
 				gameObject.SetActive (false);
 		}
 		if (current.Length > 0) {
-			if ((aniStep % current.Length) == 0 && loop)
-				aniStep = 0;
-			if(!(aniStep > current.Length - 1))
-				gameObject.GetComponent<SpriteRenderer> ().sprite = current [aniStep % current.Length];
+			if ((frame % current.Length) == 0 && loop)
+				frame = 0;
+			if(!(frame > current.Length - 1))
+				gameObject.GetComponent<SpriteRenderer> ().sprite = current [frame % current.Length];
 		}
 	}
 
