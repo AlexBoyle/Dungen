@@ -8,10 +8,14 @@ public class PlayerController : MonoBehaviour {
 	public GameObject basicAttack;
 	public Ability script;
 	public float playerSpeed = 1;
+	public bool falling = false;
 	private GamePadState state;
 	private GamePadState prestate;
 	private ImmortalObjectScript immortal;
 	private int index;
+	private animationState a;
+	private Vector3 prePos = new Vector3 ();
+	public int anilock = -1;
 	Quaternion currentRot;
 	Rigidbody2D RB;
 	// Use this for initialization
@@ -69,21 +73,79 @@ public class PlayerController : MonoBehaviour {
 
 	// Update is called once per frame
 	void FixedUpdate () {
+		if(anilock > -1)
+			anilock --;
+		if (anilock < 0)
+			a = animationState.still;
 		state = GamePad.GetState (controllerNum);
+		if(Mathf.Abs(prePos.y - transform.position.y) > 0.001f){falling = true;} else{ falling=false;}
 		gameObject.GetComponent<IndAnim> ().current = immortal.animations[index].getWalk();
 		RaycastHit2D groundCheck = Physics2D.Raycast (transform.position, Vector2.down, .35f);
-		RB.velocity = new Vector2 (playerSpeed * state.ThumbSticks.Left.X, 0);
-		if (state.Buttons.A == ButtonState.Pressed && prestate.Buttons.A == ButtonState.Released) {
-			RB.velocity = new Vector2 (0, 100);
+		RB.velocity = new Vector2 (playerSpeed * state.ThumbSticks.Left.X, RB.velocity.y);
+		if (state.Buttons.A == ButtonState.Pressed && prestate.Buttons.A == ButtonState.Released && !falling) {
+			RB.velocity += new Vector2 (0, 16);
 		}
-		if (state.ThumbSticks.Left.X < 0)
+		if (state.ThumbSticks.Left.X < 0) {
 			transform.rotation = Quaternion.Euler (180, 0, 180);
-		else if (state.ThumbSticks.Left.X > 0)
+			if(anilock < 0)
+				a = animationState.walk;
+		} else if (state.ThumbSticks.Left.X > 0) {
 			transform.rotation = Quaternion.Euler (0, 0, 0);
-		else
-			gameObject.GetComponent<IndAnim> ().current = immortal.animations[index].getIdle();
+			if(anilock < 0)
+				a = animationState.walk;
+		}
+		if (falling && anilock < 0)
+			a = animationState.falling;
+		if (script.abilityAUpdate (state, prestate))
+			a = animationState.a;
+		if (script.abilityBUpdate (state, prestate))
+			a = animationState.b;
+		if (script.abilityXUpdate (state, prestate))
+				a = animationState.x;
+		if (script.abilityYUpdate (state, prestate))
+				a = animationState.y;
 		script.abilityUpdate (state,prestate);
+		switch (a) {
+		case animationState.spin:
+			gameObject.GetComponent<IndAnim> ().current = immortal.animations[index].getSpin();
+			break;
+		case animationState.still:
+			gameObject.GetComponent<IndAnim> ().current = immortal.animations[index].getIdle();
+			break;
+		case animationState.walk:
+			gameObject.GetComponent<IndAnim> ().current = immortal.animations[index].getWalk();
+			break;
+		case animationState.a:
+			gameObject.GetComponent<IndAnim> ().current = immortal.animations [index].getAbilityA ();
+			if (anilock < 0) {
+				anilock = immortal.animations [index].getAbilityA ().Length * gameObject.GetComponent<IndAnim> ().aniSpeed;
+				gameObject.GetComponent<IndAnim> ().frame = 0;
+			}
+			break;
+		case animationState.b:
+			gameObject.GetComponent<IndAnim> ().current = immortal.animations [index].getAbilityB ();
+			if (anilock < 0) {
+				anilock = immortal.animations [index].getAbilityB ().Length * gameObject.GetComponent<IndAnim> ().aniSpeed;
+				gameObject.GetComponent<IndAnim> ().frame = 0;
+			}
+			break;
+		case animationState.x:
+			gameObject.GetComponent<IndAnim> ().current = immortal.animations [index].getAbilityX ();
+			if (anilock < 0) {
+				anilock = immortal.animations [index].getAbilityX ().Length * gameObject.GetComponent<IndAnim> ().aniSpeed;
+				gameObject.GetComponent<IndAnim> ().frame = 0;
+			}
+			break;
+		case animationState.y:
+			gameObject.GetComponent<IndAnim> ().current = immortal.animations [index].getAbilityY ();
+			if (anilock < 0) {
+				anilock = immortal.animations [index].getAbilityY ().Length * gameObject.GetComponent<IndAnim> ().aniSpeed;
+				gameObject.GetComponent<IndAnim> ().frame = 0;
+			}
+			break;
+		}
 		prestate = state;
+		prePos = transform.position;
 		attackDir.transform.rotation =  PointerRotation (state.ThumbSticks.Left);
 	}
 

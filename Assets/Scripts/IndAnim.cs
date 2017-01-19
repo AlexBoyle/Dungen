@@ -7,9 +7,6 @@ public class IndAnim : MonoBehaviour {
 	private int anicount = 0;
 	public int frame = 0;
 	public bool resetOnEnable = true;
-	void Start(){
-		
-	}
 	void OnEnable() {
 		if (resetOnEnable) {
 			frame = 0;
@@ -19,7 +16,7 @@ public class IndAnim : MonoBehaviour {
 		}
 	}
 	public void clear(){
-		
+
 		gameObject.GetComponent<SpriteRenderer> ().sprite = null;
 		Debug.Log("call");
 	}
@@ -32,8 +29,9 @@ public class IndAnim : MonoBehaviour {
 				gameObject.SetActive (false);
 		}
 		if (current.Length > 0) {
-			if ((frame % current.Length) == 0 && loop)
+			if ((frame % current.Length) == 0 && loop) {
 				frame = 0;
+			}
 			if(!(frame > current.Length - 1))
 				gameObject.GetComponent<SpriteRenderer> ().sprite = current [frame % current.Length];
 		}

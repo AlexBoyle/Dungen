@@ -5,7 +5,10 @@ using XInputDotNetPure;
 public class Ranged : Ability {
 
 
-
+	public override bool abilityYUpdate(GamePadState state,GamePadState prestate){return false;}
+	public override bool abilityAUpdate(GamePadState state,GamePadState prestate){return false;}
+	public override bool abilityBUpdate(GamePadState state,GamePadState prestate){return false;}
+	public override bool abilityXUpdate(GamePadState state,GamePadState prestate){return false;}
 	public override void abilityUpdate(GamePadState state,GamePadState prestate){
 		//ability defs here
 		if (state.Buttons.A == ButtonState.Pressed && state.Buttons.A == ButtonState.Released) {
