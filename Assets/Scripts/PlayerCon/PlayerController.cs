@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		immortal = GameObject.Find ("Immortal").GetComponent<ImmortalObjectScript> ();
+		basicAttack.SetActive (false);
 		RB = GetComponent<Rigidbody2D> ();
 		currentRot = Quaternion.identity;
 		state = GamePad.GetState (controllerNum);
@@ -75,8 +76,10 @@ public class PlayerController : MonoBehaviour {
 	void FixedUpdate () {
 		if(anilock > -1)
 			anilock --;
-		if (anilock < 0)
+		if (anilock < 0) {
+			basicAttack.SetActive (false);
 			a = animationState.still;
+		}
 		state = GamePad.GetState (controllerNum);
 		if(Mathf.Abs(prePos.y - transform.position.y) > 0.001f){falling = true;} else{ falling=false;}
 		gameObject.GetComponent<IndAnim> ().current = immortal.animations[index].getWalk();
@@ -130,6 +133,7 @@ public class PlayerController : MonoBehaviour {
 			}
 			break;
 		case animationState.x:
+			basicAttack.SetActive (true);
 			gameObject.GetComponent<IndAnim> ().current = immortal.animations [index].getAbilityX ();
 			if (anilock < 0) {
 				anilock = immortal.animations [index].getAbilityX ().Length * gameObject.GetComponent<IndAnim> ().aniSpeed;

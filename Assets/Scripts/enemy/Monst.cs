@@ -11,7 +11,7 @@ public class Monst : MonoBehaviour{
 	}
 	void OnTriggerEnter2D(Collider2D col){
 		if(col.tag == "Player")
-		health -= col.transform.parent.parent.GetComponent<PlayerController> ().script.damage;
+		health -= col.transform.parent.GetComponent<PlayerController> ().script.damage;
 	}
 	public void doDamage(int a){
 		health -= a;

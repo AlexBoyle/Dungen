@@ -73,6 +73,8 @@ public class Rogue : Ability {
 		}
 		if (XcoolDown >= 0) {
 			XcoolDown--;
+		} else if(XcoolDown == -1){
+			XcoolDown--;
 		}
 		if (YcoolDown >= 0) {
 			YcoolDown--;
