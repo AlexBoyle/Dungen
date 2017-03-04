@@ -1,7 +1,7 @@
+﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2008
-
-Project("{C49EAEE4-6021-FB48-592D-C4432CD6BEF8}") = "Dungen", "Assembly-CSharp.csproj", "{6A49EFD2-4858-CD4D-A1BB-8DA238B51D1A}"
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dungen", "Assembly-CSharp.csproj", "{6A49EFD2-4858-CD4D-A1BB-8DA238B51D1A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
