@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour {
 	public GameObject attackDir;
 	public GameObject basicAttack;
 	public Ability script;
+	public float jumpheight = 16;
 	public float playerSpeed = 1;
 	public bool falling = false;
 	private GamePadState state;
@@ -30,7 +31,7 @@ public class PlayerController : MonoBehaviour {
 		{
 		case playerClass.Rogue:
 			index = 0;
-			script = new Rogue (gameObject);
+			script = new Rogue ();
 			break;
 		case playerClass.Mage:
 			index = 1;
@@ -38,11 +39,11 @@ public class PlayerController : MonoBehaviour {
 			break;
 		case playerClass.Tank:
 			index = 2;
-			script = new Tank ();
+			script = new Tank (gameObject);
 			break;
 		case playerClass.Ranged:
 			index = 3;
-			script = new Ranged ();
+			script = new Ranged (gameObject);
 			break;
 		}
 	}
@@ -55,7 +56,7 @@ public class PlayerController : MonoBehaviour {
 		{
 		case playerClass.Rogue:
 			index = 0;
-			script = new Rogue (gameObject);
+			script = new Rogue ();
 			break;
 		case playerClass.Mage:
 			index = 1;
@@ -63,11 +64,11 @@ public class PlayerController : MonoBehaviour {
 			break;
 		case playerClass.Tank:
 			index = 2;
-			script = new Tank ();
+			script = new Tank (gameObject);
 			break;
 		case playerClass.Ranged:
 			index = 3;
-			script = new Ranged ();
+			script = new Ranged (gameObject);
 			break;
 		}
 	}
@@ -86,7 +87,7 @@ public class PlayerController : MonoBehaviour {
 		RaycastHit2D groundCheck = Physics2D.Raycast (transform.position, Vector2.down, .35f);
 		RB.velocity = new Vector2 (playerSpeed * state.ThumbSticks.Left.X, RB.velocity.y);
 		if (state.Buttons.A == ButtonState.Pressed && prestate.Buttons.A == ButtonState.Released && !falling) {
-			RB.velocity += new Vector2 (0, 16);
+			RB.velocity += new Vector2 (0, jumpheight);
 		}
 		if (state.ThumbSticks.Left.X < 0) {
 			transform.rotation = Quaternion.Euler (180, 0, 180);
@@ -151,6 +152,7 @@ public class PlayerController : MonoBehaviour {
 		prestate = state;
 		prePos = transform.position;
 		attackDir.transform.rotation =  PointerRotation (state.ThumbSticks.Left);
+
 	}
 
 	Quaternion PointerRotation(GamePadThumbSticks.StickValue a){
@@ -162,6 +164,12 @@ public class PlayerController : MonoBehaviour {
 			return currentRot;
 		} else {
 			return currentRot;
+		}
+	}
+
+	void OnTriggerEnter2D(Collider2D col){
+		if (col.tag != "kill") {
+			gameObject.SetActive (false);
 		}
 	}
 }

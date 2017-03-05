@@ -3,83 +3,27 @@ using System.Collections;
 using XInputDotNetPure;
 
 public class Rogue : Ability {
-	private status playerState = status.Normal;
-	private int stealthTimer = 0;
-	private int AcoolDown = 0;
-	private int XcoolDown = 0;
-	private int BcoolDown = 0;
-	private int YcoolDown = 0;
-	private GameObject obj;
-	private PlayerController con;
-	public Rogue(GameObject obje){
-		obj = obje;
-		con = obj.GetComponent<PlayerController> ();
-	}
-	public override bool abilityYUpdate(GamePadState state,GamePadState prestate){
-		if (state.Buttons.Y == ButtonState.Pressed && prestate.Buttons.Y == ButtonState.Released && YcoolDown < 0) {
-			if (playerState == status.Normal) {
 
-			} 
-			else if (playerState == status.Stealth) {
-				//
-			}
-			return true;
-		}
-		return false;
-	}
-	public override bool abilityAUpdate(GamePadState state,GamePadState prestate){
-		return false;
-	}
-	public override bool abilityBUpdate(GamePadState state,GamePadState prestate){
-		if (state.Buttons.B == ButtonState.Pressed && prestate.Buttons.B == ButtonState.Released && BcoolDown < 0) {
-			playerState = status.Stealth;
-			obj.transform.position += new Vector3 (state.ThumbSticks.Left.X * 6, state.ThumbSticks.Left.Y * 6, 0);
-			stealthTimer = 60;
-			BcoolDown = 120;
-			return true;
-		}
-		return false;
-	}
-	public override bool abilityXUpdate(GamePadState state,GamePadState prestate){
-		if (state.Buttons.X == ButtonState.Pressed && prestate.Buttons.X == ButtonState.Released && XcoolDown < 0) {
-			if (playerState == status.Normal) {
-				damage = 10;
-			} 
-			else if (playerState == status.Stealth) {
-				damage = 15;
-			}
 
-			XcoolDown = 20;
-			return true;
-		}
-		return false;
-	}
+	public override bool abilityYUpdate(GamePadState state,GamePadState prestate){return false;}
+	public override bool abilityAUpdate(GamePadState state,GamePadState prestate){return false;}
+	public override bool abilityBUpdate(GamePadState state,GamePadState prestate){return false;}
+	public override bool abilityXUpdate(GamePadState state,GamePadState prestate){return false;}
 	public override void abilityUpdate(GamePadState state,GamePadState prestate){
-		if (playerState == status.Stealth) {
-			obj.GetComponent<SpriteRenderer> ().color = new Color (1, 1, 1, .2f);
-			stealthTimer--;
+		//ability defs here
+		if (state.Buttons.A == ButtonState.Pressed && state.Buttons.A == ButtonState.Released) {
+
 		}
-		else {
-			obj.GetComponent<SpriteRenderer>().color = new Color(1,1,1,1);
+		if (state.Buttons.B == ButtonState.Pressed && state.Buttons.B == ButtonState.Released) {
+
 		}
-		if (stealthTimer < 0) {
-			playerState = status.Normal;
+		if (state.Buttons.X == ButtonState.Pressed && state.Buttons.X == ButtonState.Released) {
+
 		}
-		if (AcoolDown >= 0) {
-			AcoolDown--;
-		}
-		if (BcoolDown >= 0) {
-			BcoolDown--;
-		}
-		if (XcoolDown >= 0) {
-			XcoolDown--;
-		} else if(XcoolDown == -1){
-			XcoolDown--;
-		}
-		if (YcoolDown >= 0) {
-			YcoolDown--;
+		if (state.Buttons.Y == ButtonState.Pressed && state.Buttons.Y == ButtonState.Released) {
+
 		}
 	}
-	
+
 
 }

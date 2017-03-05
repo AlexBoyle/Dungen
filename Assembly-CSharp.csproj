@@ -57,9 +57,14 @@
      <Compile Include="Assets\Scripts\PlayerCon\Ranged.cs" />
      <Compile Include="Assets\Scripts\PlayerCon\Rogue.cs" />
      <Compile Include="Assets\Scripts\PlayerCon\Tank.cs" />
+     <Compile Include="Assets\Scripts\PlayerCon\arrow.cs" />
+     <Compile Include="Assets\Scripts\dmg.cs" />
      <Compile Include="Assets\Scripts\enemy\Monst.cs" />
      <Compile Include="Assets\Scripts\enemy\Slime.cs" />
      <Compile Include="Assets\Scripts\enemy\SlimeProj.cs" />
+     <Compile Include="Assets\Scripts\enemy\healthbar.cs" />
+     <Compile Include="Assets\Scripts\ignoreBoss.cs" />
+     <Compile Include="Assets\Scripts\pool.cs" />
      <None Include="Assets\XInputDotNet\MITLicense.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>

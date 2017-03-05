@@ -4,10 +4,8 @@ using XInputDotNetPure;
 using UnityEngine.SceneManagement;
 
 public enum animationState {walk = 0,still = 1,falling = 2, x = 3,y = 4, a = 5, b = 6, spin = 7 };
-public enum status {Normal = 0,Stealth = 1};
 public enum playerClass {Rogue = 0,Mage = 1,Tank = 2,Ranged = 3,Null = 5};
-public enum effect {Root = 0, Stun = 1, Poison = 3, Blind = 4}
-public enum boss {Garry = 0, Tyler = 1, Rish = 3, Alex = 4}
+public enum effect {Root = 0, Stun = 1, Poison = 3, Blind = 4, Null = 5}
 
 
 public class ImmortalObjectScript : MonoBehaviour {
@@ -50,6 +48,10 @@ public class ImmortalObjectScript : MonoBehaviour {
 
 [System.Serializable]
 public class Effect{
+	public Effect(effect e, int t){
+		effect = e;
+		time = t;
+	}
 	public effect  effect;
 	public int time;
 }
